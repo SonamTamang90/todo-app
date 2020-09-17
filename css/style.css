@@ -65,7 +65,7 @@ body {
     border: .1rem solid #777;
 }
 
-.todo__item {
+.todo__list {
     font-size: 1.5rem;
     display: flex;
     justify-content: center;
@@ -73,7 +73,7 @@ body {
     align-items: center;
 }
 
-.todo__list {
+.todo__item {
     display: flex;
     align-items: center;
     background-color: #1489cca1;

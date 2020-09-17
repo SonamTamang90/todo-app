@@ -1,92 +1,45 @@
-// TODO CONTROLLER
-var todoController = (function() {
-    var todoArray = [];
 
-    return {
-        addTodoItem: function(item) {
-            todoArray.push(item);
-            
-            var newItem = todoArray.map(function(cur) {
-                return cur;
-            });
-
-            return newItem;
-        },
-
-        test: function() {
-            return todoArray;
-        }
-    }
-
-})();
+var form = document.querySelector('.todo__form');
+var input = document.querySelector('.todo__input');
+var list = document.querySelector('.todo__list');
+var item = document.querySelector('.todo__item');
 
 
-// UI CONTROLLER
-var UIController = (function() {
+//ARRAY FOR STORAGE
+var todosArray = [];
 
-    var DOMstring = {
-        toDoValue: '.todo__input',
-        todoContainer: '.todo__item'
-    };
+//LOCAL STORAGE FUNCTIONALITY
+var todosArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos', todosArray)) : [];
 
-    return {
-        getInput: function() {
-            return {
-                toDos: document.querySelector(DOMstring.toDoValue).value
-            }
-        },
-
-        displayTodoItem: function(list) {
-            var html, newHtml, element;
-            element = DOMstring.todoContainer;
-
-            html = `<div class="todo__list">
-                        <i class="fas fa-check todo__icon"></i>
-                        %description%
-                    </div>`;
-
-            newHtml = html.replace('%description%', list);
-
-            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
-        }
-    }
-
-})();
+var storage = JSON.parse(localStorage.getItem('todos', todosArray));
 
 
-// GLOABAL APP CONTROLLER
-var controller = (function(todoCtrl, UICtrl) {
 
-    // Add Todo Item
-    var addItem = function() {
+// ADD ITEM 
+var addTodo = function(todo) {
+    var newItem, item;
+    item = ' <div class="todo__item"><i class="fas fa-check todo__icon"></i>%description%</div>';
+    newItem = item.replace('%description%', todo);
+    list.insertAdjacentHTML('beforeend', newItem)
+};
 
-        //1. Get the input field value
-        var input = UICtrl.getInput();
-        console.log(input);
+for(var i = 0; i < storage.length; i++) {
+    addTodo(storage[i]);
+};
 
-        //2. Add to the todo controller
-        var newItem = todoCtrl.addTodoItem(input.toDos);
+//SET EVENT LISTENER
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-        //3. Display in the UI.
-        UICtrl.displayTodoItem(newItem);
-    };
+    // Add todos in the array
+    todosArray.push(input.value);
 
-    // Setup Event Listener
-    var setEventListener = function() {
-        document.addEventListener('keypress', function(e) {
-            if(e.keyCode === 13 || e.which === 13) {
-                addItem();
-            }
-        });
-    };
+    //Store in the storage.
+    localStorage.setItem('todos', JSON.stringify(todosArray));
 
-    return {
-        init: function() {
-            setEventListener();
-        }
-    }
+    //Add new item in UI
+    addTodo(input.value);
 
-})(todoController, UIController);
-
-controller.init();
-
+    //Clear the input field
+    input.value = '';
+});
