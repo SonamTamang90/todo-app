@@ -3,6 +3,7 @@ var form = document.querySelector('.todo__form');
 var input = document.querySelector('.todo__input');
 var list = document.querySelector('.todo__list');
 var item = document.querySelector('.todo__item');
+var button = document.querySelector('#btn--new');
 
 
 //ARRAY FOR STORAGE
@@ -12,20 +13,6 @@ var todosArray = [];
 var todosArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos', todosArray)) : [];
 
 var storage = JSON.parse(localStorage.getItem('todos', todosArray));
-
-
-
-// ADD ITEM 
-var addTodo = function(todo) {
-    var newItem, item;
-    item = ' <div class="todo__item"><i class="fas fa-check todo__icon"></i>%description%</div>';
-    newItem = item.replace('%description%', todo);
-    list.insertAdjacentHTML('beforeend', newItem)
-};
-
-for(var i = 0; i < storage.length; i++) {
-    addTodo(storage[i]);
-};
 
 //SET EVENT LISTENER
 form.addEventListener('submit', function(e) {
@@ -43,3 +30,20 @@ form.addEventListener('submit', function(e) {
     //Clear the input field
     input.value = '';
 });
+
+// ADD ITEM 
+var addTodo = function(todo) {
+    var newItem, item;
+    item = '<div class="todo__item"><i class="fas fa-check todo__icon"></i>%description%</div>';
+    newItem = item.replace('%description%', todo);
+    list.insertAdjacentHTML('beforeend', newItem)
+};
+
+for(var i = 0; i < storage.length; i++) {
+    addTodo(storage[i]);
+};
+
+// CLEAR OLD AND ADD NEW TODO
+// button.addEventListener('click', function() {
+   
+// });
