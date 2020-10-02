@@ -20,7 +20,7 @@ var data = {
 };
 
 //FUNCTION TO ADD A TODO ITEM INTO THE DATA STRUCTURES
-let addTodo = (item) => {
+const addTodo = (item) => {
     let ID, newItem;
     //Assigning an ID for the todo item.
     if(data.todos.todoItems.length > 0) {
@@ -61,6 +61,17 @@ const displayTodo = (todo) => {
     list.insertAdjacentHTML('beforeend', newHtml);
 }
 
+// CLEARING THE INPUT FIELDS
+const clearInput = () => {
+   input.value = "";
+}
+
+
+
+/*----------------------------------------------------------------------------
+  GLOBAL APP CONTROLLER FOR THE TODO APP
+-----------------------------------------------------------------------------*/
+
 //FUNCTION TO ADD A TODO ITEM 
 const ctrlAddTodo = () => {
 
@@ -76,14 +87,9 @@ const ctrlAddTodo = () => {
     //4. Display in the UI 
     displayTodo(newItem);
 
-
     //5. Clear the fields 
+   clearInput();
 };
-
-
-/*----------------------------------------------------------------------------
-  GLOBAL APP CONTROLLER FOR THE TODO APP
------------------------------------------------------------------------------*/
 
 // SETTING EVENT LISTENER(GLOBAL APP CONTROLLER)
 const setEventListener = () => {
