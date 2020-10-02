@@ -4,23 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO APP</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="todo__title">Todo app</h1>
+        <div class="todo__heading">
+            <div class="icon-box">
+                <i class="ion-ios-game-controller-a todo__heading--icon"></i>
+            </div>
+            <h1 class="todo__title">Keep track of your activities</h1>
+            <div class="icon-box">
+                <i class="ion-ios-game-controller-a todo__heading--icon"></i>
+            </div>
+        </div>
         <form action="#" class="todo__form">
             <div class="todo__group">
                 <input type="text" class="todo__input" placeholder="List your productivity">
             </div>
         </form>
         <div class="todo__list">
-            <!-- <div class="todo__item">
-                <i class="fas fa-check todo__icon"></i>
-                Website Development
-           </div> -->
+            <div class="todo__item--container">
+                <div class="todo__item">
+                    <i class="ion-ios-checkmark-empty todo__item-icon"></i>
+                    Website Development
+               </div>
+               <div class="todo__delete">
+                   <button id="btn--delete">
+                       Delete
+                       <!-- <i class="ion-ios-close btn--delete-icon"></i> -->
+                   </button>
+               </div>
+               <div class="todo__edit">
+                    <button id="btn--edit">
+                        Edit
+                        <!-- <i class="ion-ios-minus btn--edit-icon"></i> -->
+                    </button>
+                </div>
+            </div>
         </div>
         
     </div>

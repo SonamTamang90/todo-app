@@ -39,6 +39,11 @@ var addTodo = function(todo) {
     list.insertAdjacentHTML('beforeend', newItem)
 };
 
+// DELETE ITEM
+var deleteTodo = function(todo) {
+    
+}
+
 for(var i = 0; i < storage.length; i++) {
     addTodo(storage[i]);
 };
