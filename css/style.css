@@ -144,9 +144,20 @@ body {
 #btn--edit {
     border: none;
     background: none;
-    padding: .3rem 1rem;
+    padding: .4rem 1rem;
     font-size: 1.2rem;
     text-transform: uppercase;
+    transition: all .4s;
+}
+
+#btn--delete:hover {
+    background-color: #f12626;
+    color: #fff;
+}
+
+#btn--edit:hover {
+    background-color:#1488cc;
+    color: #fff;
 }
 
 
