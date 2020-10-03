@@ -40,8 +40,16 @@ const addTodo = (item, time) => {
     return newItem;
 };
 
-const deleteTodo = () => {
+const deleteTodo = (ID) => {
+    let ids, index;
 
+    ids = data.todos.todoItems.map((cur) => {
+        return cur.id;
+    });
+
+    index = ids.indexOf(ID);
+    
+    data.todos.todoItems.splice(index, 1);
 };
 
 /*----------------------------------------------------------------------------
@@ -52,7 +60,7 @@ const deleteTodo = () => {
 const displayTodo = (todo) => {
     let html, newHtml;
 
-    html = `<div class="todo__item--container" id = "">
+    html = `<div class="todo__item--container" id="item-%id%">
                 <div class="todo__item">
                     <div class="todo__item-group">
                         <i class="ion-ios-checkmark-empty todo__item-icon"></i>
@@ -62,24 +70,26 @@ const displayTodo = (todo) => {
                         <i class="ion-ios-alarm-outline todo__item-icon"></i>
                         %timing% AM
                     </div>
-            </div>
-            <div class="todo__delete">
-                <button id="btn--delete">
-                    Delete
-                </button>
-            </div>
-            <div class="todo__edit">
-                    <button id="btn--edit">
-                        Edit
-                    </button>
+                </div>
+                <div class="todo__delete">
+                    <button id="btn--delete">Delete</button>
+                </div>
+                <div class="todo__edit">
+                    <button id="btn--edit">Edit</button>
                 </div>
             </div>`;
 
-    newHtml = html.replace('%activity%',  todo.item);
+    newHtml = html.replace('%id%', todo.id);
+    newHtml = newHtml.replace('%activity%',  todo.item);
     newHtml = newHtml.replace('%timing%',  todo.timing);
 
     document.querySelector(DOMstrings.listContainer).insertAdjacentHTML('beforeend', newHtml);
-}
+};
+
+const deleteListItem = (listID) => {
+    let element = document.getElementById(listID);
+    element.parentNode.removeChild(element);
+};
 
 // CLEARING THE INPUT FIELDS
 // const clearInput = () => {
@@ -118,12 +128,22 @@ const ctrlAddTodo = () => {
 };
 
 //FUNCTION TO DELETE A TODO ITEM
-const ctrlDeleleTodo = () => {
+const ctrlDeleleTodo = e => {
+
+    let fields, splitID, ID;
+
+    fields = e.target.parentNode.parentNode.id;
+    console.log(fields);
+    splitID = fields.split('-');
+
+    ID = splitID[1];
+    //console.log(ID);
 
     //1. Delete an todo item from data structures
-
+    deleteTodo(ID);
 
     //2. Remove todo item from the UI.
+    deleteListItem(fields);
 
 };
 
@@ -138,7 +158,7 @@ const setEventListener = () => {
         }
     });
 
-    
+    document.querySelector('.todo__list').addEventListener('click', ctrlDeleleTodo);
 };
 
 // INITIAZING THE APP
