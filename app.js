@@ -1,15 +1,20 @@
 // ES6 TODO APP
-// ELEMENT LIST 
-let input = document.querySelector('.todo__input');
-let list = document.querySelector('.todo__list');
+
+// HOLDING ALL DOM STRINGS
+var DOMstrings = {
+    inputActivity: '.todo__activity',
+    inputTiming: '.todo__timing',
+    listContainer: '.todo__list'
+}
 
 /*----------------------------------------------------------------------------
   IMPLEMENTAION OF LOGIC FOR TODO APP
 -----------------------------------------------------------------------------*/
 //FUNCTION CONSTRUCTOR
-let Activity = function(id, item) {
+let Activity = function(id, item, timing) {
     this.id = id;
     this.item = item;
+    this.timing = timing;
 };
 
 // DATA STRUCTURES FOR STORING TODO ACTIVITIES
@@ -20,7 +25,7 @@ var data = {
 };
 
 //FUNCTION TO ADD A TODO ITEM INTO THE DATA STRUCTURES
-const addTodo = (item) => {
+const addTodo = (item, time) => {
     let ID, newItem;
     //Assigning an ID for the todo item.
     if(data.todos.todoItems.length > 0) {
@@ -29,10 +34,14 @@ const addTodo = (item) => {
         ID = 0;
     };
 
-    newItem = new Activity(ID, item);
+    newItem = new Activity(ID, item, time);
     data.todos.todoItems.push(newItem);
 
     return newItem;
+};
+
+const deleteTodo = () => {
+
 };
 
 /*----------------------------------------------------------------------------
@@ -43,43 +52,60 @@ const addTodo = (item) => {
 const displayTodo = (todo) => {
     let html, newHtml;
 
-    html = `<div class="todo__item--container">
+    html = `<div class="todo__item--container" id = "">
                 <div class="todo__item">
-                    <i class="ion-ios-checkmark-empty todo__item-icon"></i>
-                    %activity%
-                </div>
-                <div class="todo__delete">
-                    <button id="btn--delete">Delete</button>
-                </div>
+                    <div class="todo__item-group">
+                        <i class="ion-ios-checkmark-empty todo__item-icon"></i>
+                        %activity%
+                    </div>
+                    <div class="todo__item-group">
+                        <i class="ion-ios-alarm-outline todo__item-icon"></i>
+                        %timing% AM
+                    </div>
+            </div>
+            <div class="todo__delete">
+                <button id="btn--delete">
+                    Delete
+                </button>
+            </div>
             <div class="todo__edit">
-                    <button id="btn--edit">Edit</button>
+                    <button id="btn--edit">
+                        Edit
+                    </button>
                 </div>
             </div>`;
 
     newHtml = html.replace('%activity%',  todo.item);
+    newHtml = newHtml.replace('%timing%',  todo.timing);
 
-    list.insertAdjacentHTML('beforeend', newHtml);
+    document.querySelector(DOMstrings.listContainer).insertAdjacentHTML('beforeend', newHtml);
 }
 
 // CLEARING THE INPUT FIELDS
-const clearInput = () => {
-   input.value = "";
-}
-
+// const clearInput = () => {
+//    input.value = "";
+// }
 
 
 /*----------------------------------------------------------------------------
   GLOBAL APP CONTROLLER FOR THE TODO APP
 -----------------------------------------------------------------------------*/
+//FUNCTION TO GET THE VALUES FROM INPUTS
+const getInput = () => {
+    return {
+        activity: document.querySelector(DOMstrings.inputActivity).value,
+        timing: document.querySelector(DOMstrings.inputTiming).value
+    }
+}
 
 //FUNCTION TO ADD A TODO ITEM 
 const ctrlAddTodo = () => {
 
     //1. Get the input values
-    let activity = input.value;
+    var input = getInput();
 
     //2. Add to the data structures
-    let newItem = addTodo(activity);
+    let newItem = addTodo(input.activity, input.timing);
 
     //3. Push into the Local Storages
 
@@ -88,16 +114,31 @@ const ctrlAddTodo = () => {
     displayTodo(newItem);
 
     //5. Clear the fields 
-   clearInput();
+    //clearInput();
+};
+
+//FUNCTION TO DELETE A TODO ITEM
+const ctrlDeleleTodo = () => {
+
+    //1. Delete an todo item from data structures
+
+
+    //2. Remove todo item from the UI.
+
 };
 
 // SETTING EVENT LISTENER(GLOBAL APP CONTROLLER)
+
+
+
 const setEventListener = () => {
     document.addEventListener('keypress', e => {
         if(e.keyCode === 13) {
             ctrlAddTodo();
         }
-    })
+    });
+
+    
 };
 
 // INITIAZING THE APP

@@ -72,19 +72,43 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     
 }
 
 .todo__group {
     margin-bottom: 2rem;
+    display: flex;
 }
 
-.todo__input {
+.todo__activity {
     display: inline-block;
-    padding: 1rem 6.8rem;
+    padding: 1.2rem 2rem;
+    border-radius: .2rem;
+    border: .1rem solid #1489cca1;  
+    width: 80%;
+    margin-right: .5rem; 
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.todo__timing {
+    display: inline-block;
+    width: 32%;
+    padding: 1rem 1rem;
+    border-radius: .2rem;
+    border: .1rem solid #1489cca1;   
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.todo__timing--option {
+    display: inline-block;
+    width: 12%;
+    padding: 1rem 1rem;
     border-radius: .2rem;
     border: .1rem solid #1489cca1;   
 }
+
+.todo
 
 .todo__input:focus {
     outline: none;
@@ -108,14 +132,20 @@ body {
 .todo__item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     justify-items: center;
     background-color: #f7f4f4;
     width: 31%;
-    padding: .5rem 4rem;
+    padding: .5rem .7rem;
     color: #545454;
     margin-bottom: 2rem;
     margin-right: .2rem;
     margin-left: 11rem;
+}
+
+.todo__item-group {
+    display: flex;
+    align-items: center;
 }
 
 .todo__delete {
