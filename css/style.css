@@ -91,6 +91,12 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
+.todo__activity:focus {
+    outline: none;
+    border: 1.5px solid #1488cc;
+    /* box-shadow: 0 5rem 3rem rgba(0, 0, 0, .1); */
+}
+
 .todo__timing {
     display: inline-block;
     width: 32%;
@@ -98,6 +104,11 @@ body {
     border-radius: .2rem;
     border: .1rem solid #1489cca1;   
     font-family: 'Noto Sans', sans-serif;
+}
+
+.todo__timing:focus {
+    outline: none;
+    border: 1.5px solid #1488cc;
 }
 
 .todo__timing--option {
@@ -108,7 +119,6 @@ body {
     border: .1rem solid #1489cca1;   
 }
 
-.todo
 
 .todo__input:focus {
     outline: none;
@@ -127,6 +137,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.todo__edit-mode {
+    border: 1px solid #1488cc;
 }
 
 .todo__item {

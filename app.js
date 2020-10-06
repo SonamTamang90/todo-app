@@ -62,13 +62,13 @@ const displayTodo = (todo) => {
 
     html = `<div class="todo__item--container" id="item-%id%">
                 <div class="todo__item">
-                    <div class="todo__item-group">
+                    <div class="todo__item-group" id="todo__description">
                         <i class="ion-ios-checkmark-empty todo__item-icon"></i>
                         %activity%
                     </div>
-                    <div class="todo__item-group">
+                    <div class="todo__item-group" id= "todo__timing">
                         <i class="ion-ios-alarm-outline todo__item-icon"></i>
-                        %timing% AM
+                         %timing% AM
                     </div>
                 </div>
                 <div class="todo__delete">
@@ -84,6 +84,11 @@ const displayTodo = (todo) => {
     newHtml = newHtml.replace('%timing%',  todo.timing);
 
     document.querySelector(DOMstrings.listContainer).insertAdjacentHTML('beforeend', newHtml);
+};
+
+const displayEditTodo = (edit) => {
+    document.getElementById('todo__description').innerHTML = `<i class="ion-ios-checkmark-empty todo__item-icon"></i>${edit.item}`;
+    document.getElementById('todo__timing').innerHTML = `<i class="ion-ios-alarm-outline todo__item-icon"></i> ${edit.timing}`;
 };
 
 const deleteListItem = (listID) => {
@@ -130,27 +135,55 @@ const ctrlAddTodo = () => {
 //FUNCTION TO DELETE A TODO ITEM
 const ctrlDeleleTodo = e => {
 
-    let fields, splitID, ID;
+        let fields, splitID, ID, element;
 
-    fields = e.target.parentNode.parentNode.id;
-    console.log(fields);
-    splitID = fields.split('-');
+        element = e.target.id;
+        if(element === 'btn--delete') {
+            fields = e.target.parentNode.parentNode.id;
 
-    ID = splitID[1];
-    //console.log(ID);
+            splitID = fields.split('-');
+        
+            ID = splitID[1];
+            //console.log(ID);
+            
+            //1. Delete an todo item from data structures
+            deleteTodo(ID);
 
-    //1. Delete an todo item from data structures
-    deleteTodo(ID);
+            //2. Remove todo item from the UI.
+            deleteListItem(fields); 
+        }
+};
 
-    //2. Remove todo item from the UI.
-    deleteListItem(fields);
+//FUNCTION TO EDIT A TODO ITEM
+const ctrlEditTodo = (e) => {
+    let inputs, inputsArr, description, timing;
+     
+    editBtn = e.target.id;
+     
+    if(editBtn === 'btn--edit') {
+        //1. Add the edit mode 
+        document.querySelector('.todo__item').classList.toggle('todo__edit-mode')
 
+        //2. Select the input and timing field for new todo
+        inputs = document.querySelectorAll(DOMstrings.inputActivity + ',' + DOMstrings.inputTiming);
+        inputsArr = Array.from(inputs);
+        inputsArr[0].focus();
+
+        //3. Get the inputs values
+        var input = getInput();
+
+        //4. Add to the data structures
+        let newItem = addTodo(input.activity, input.timing);
+
+        //5. Display edit data in UI
+        displayEditTodo(newItem);
+       
+    }  
+
+    
 };
 
 // SETTING EVENT LISTENER(GLOBAL APP CONTROLLER)
-
-
-
 const setEventListener = () => {
     document.addEventListener('keypress', e => {
         if(e.keyCode === 13) {
@@ -159,6 +192,8 @@ const setEventListener = () => {
     });
 
     document.querySelector('.todo__list').addEventListener('click', ctrlDeleleTodo);
+
+    document.querySelector('.todo__list').addEventListener('click', ctrlEditTodo);
 };
 
 // INITIAZING THE APP
